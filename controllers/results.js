@@ -4,14 +4,14 @@ const Result = require('../models/result')
 resultRouter.get('/', async (request, response) => {
     const results = await Result
         .find({})
-        .populate('challenge', {_id: 0, name: 1, description: 1, goal: 1})
+        .populate('challenge', {_id: 1, name: 1, description: 1, goal: 1})
     response.json(results.map(Result.format))
 })
 
 resultRouter.get('/:customer', async (request, response) => {
     const results = await Result
         .find({customer: request.params.customer})
-        .populate('challenge', {_id: 0, name: 1, description: 1, goal: 1})
+        .populate('challenge', {_id: 1, name: 1, description: 1, goal: 1})
     response.json(results.map(Result.format))
 })
 
