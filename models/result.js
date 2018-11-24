@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 
 const resultSchema = new mongoose.Schema({
   value: Number,
-  expiration: Date,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  customer: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
   challenge: { type: mongoose.Schema.Types.ObjectId, ref: 'Challenge' }
 })
 
@@ -11,8 +10,7 @@ resultSchema.statics.format = (result) => {
   return {
     id: result.id,
     value: result.value,
-    expiration: result.expiration,
-    user: result.user,
+    customer: result.customer,
     challenge: result.challenge
   }
 }
