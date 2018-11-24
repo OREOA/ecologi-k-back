@@ -48,8 +48,9 @@ router.get('/getDomesticRatio/:userId', async (req, res) => {
         .populate('ean')
         .exec()
     const mapped = purchases.map(Purchase.format)
-    const domestic = mapped.filter((p) => p.ean && p.ean.isDomestic)
-    const ratio = domestic.length / mapped.length
+    const all = mapped.reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const domestic = mapped.filter((p) => p.ean && p.ean.isDomestic).reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const ratio = domestic / all
     res.send(ratio.toString())
 })
 
