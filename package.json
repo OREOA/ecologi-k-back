@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/OREOA/junction-backend#readme",
   "dependencies": {
+    "apicache": "^1.2.3",
     "aws-sdk": "^2.361.0",
     "cors": "^2.8.5",
     "csv-parse": "^4.0.1",

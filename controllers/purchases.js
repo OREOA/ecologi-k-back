@@ -2,6 +2,7 @@ const router = require('express').Router()
 const Purchase = require('../models/purchase')
 const fs = require('fs')
 const parse = require('csv-parse')
+const cache = require('../utils/cacheMiddleware')
 
 router.get('/', async (request, response) => {
     const purchases = await Purchase
@@ -11,7 +12,7 @@ router.get('/', async (request, response) => {
 
 router.post('/load', async (request, response) => {
     try {
-        var Data = []
+        const data = []
         fs.createReadStream('./data.csv')
             .pipe(parse({
                 delimiter: ':',
@@ -19,7 +20,7 @@ router.post('/load', async (request, response) => {
             }))
             .on('data', async function(csvrow) {
                 //do something with csvrow
-                var row = csvrow[0].split(',')
+                const row = csvrow[0].split(',')
                 console.log(row)
                 const purchase = new Purchase({
                     ean: row[0],
@@ -27,12 +28,12 @@ router.post('/load', async (request, response) => {
                     userId: row[2],
                 })
                 const savedPurchase = await purchase.save()
-                Data.push(Purchase.format(savedPurchase))
+                data.push(Purchase.format(savedPurchase))
             })
             .on('end', function() {
                 //do something wiht csvData
                 console.log('done')
-                response.json(Data)
+                response.json(data)
             })
     } catch (exception) {
         console.log(exception)
@@ -40,11 +41,44 @@ router.post('/load', async (request, response) => {
     }
 })
 
-router.get('/getDomesticRatio/:userId', async (req, res) => {
+router.get('/getDomesticRatio/:userId', cache, async (req, res) => {
     const { userId } = req.params
     const purchases = await Purchase.find({
         userId,
     })
+        .populate('ean')
+        .exec()
+    const mapped = purchases.map(Purchase.format)
+    const all = mapped.reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const domestic = mapped.filter((p) => p.ean && p.ean.isDomestic).reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const ratio = domestic / all
+    res.send(ratio.toString())
+})
+
+router.get('/getDomesticRatioForAgeGroup/:ageGroup', cache, async (req, res) => {
+    /**
+     * This code is slower than the Wi-Fi at the venue but in the real implementation this would be
+     * run in the background and the result would be saved into the database
+     */
+    const { ageGroup } = req.params
+    const purchases = await Purchase.find({
+        personAgeGroup: ageGroup
+    })
+        .populate('ean')
+        .exec()
+    const mapped = purchases.map(Purchase.format)
+    const all = mapped.reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const domestic = mapped.filter((p) => p.ean && p.ean.isDomestic).reduce((acc, val) => acc + parseFloat(val.quantity), 0)
+    const ratio = domestic / all
+    res.send(ratio.toString())
+})
+
+router.get('/getDomesticRatioForAll', cache, async (req, res) => {
+    /**
+     * This code is slower than the Wi-Fi at the venue but in the real implementation this would be
+     * run in the background and the result would be saved into the database
+     */
+    const purchases = await Purchase.find({})
         .populate('ean')
         .exec()
     const mapped = purchases.map(Purchase.format)

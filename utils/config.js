@@ -3,5 +3,7 @@ require('dotenv').config()
 let mongoUrl = process.env.MONGODB_URI
 
 module.exports = {
-  mongoUrl
+    cacheEnabled: true,
+    cacheTimeout: '5 minutes',
+    mongoUrl,
 }
