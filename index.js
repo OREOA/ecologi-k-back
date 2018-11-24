@@ -11,6 +11,7 @@ const customerRouter = require('./controllers/customers')
 const purchaseRouter = require('./controllers/purchases')
 const uploaderRouter = require('./controllers/uploader')
 const productsRouter = require('./controllers/products')
+const challengeRouter = require('./controllers/challenges')
 
 mongoose
     .connect(config.mongoUrl, {
@@ -33,6 +34,7 @@ app.use('/api/customers', customerRouter)
 app.use('/api/purchases', purchaseRouter)
 app.use('/api/uploader', uploaderRouter)
 app.use('/api/products', productsRouter)
+app.use('/api/challenges', challengeRouter)
 
 const server = http.createServer(app)
 const PORT = process.env.PORT || 3001
