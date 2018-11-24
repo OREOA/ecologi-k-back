@@ -8,6 +8,7 @@ const config = require('./utils/config')
 
 const exampleRouter = require('./controllers/example')
 const usersRouter = require('./controllers/users')
+const purchaseRouter = require('./controllers/purchases')
 
 mongoose
   .connect(config.mongoUrl, {
@@ -27,6 +28,7 @@ app.use(bodyParser.json())
 
 app.use('/hello', exampleRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/purchases', purchaseRouter)
 
 const server = http.createServer(app)
 const PORT = process.env.PORT || 3001
