@@ -23,6 +23,7 @@ challengeRouter.post('/', async (request, response) => {
         const customers = await Customer.find({})
         for (var i = 0; i < customers.length; i++) {
             const customer = Customer.format(customers[i])
+            console.log(customer)
             const result = new Result({
                 value: 0,
                 completed: false,
