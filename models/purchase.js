@@ -4,6 +4,7 @@ const Product = require('./product')
 const purchaseSchema = new mongoose.Schema({
     quantity: String,
     userId: String,
+    personAgeGroup: String
 })
 
 purchaseSchema.virtual('ean', {
@@ -18,6 +19,7 @@ purchaseSchema.statics.format = (purchase) => {
         id: purchase.id,
         quantity: purchase.quantity,
         userId: purchase.userId,
+        personAgeGroup: purchase.personAgeGroup,
         ean: purchase.ean && Product.format(purchase.ean),
     }
 }

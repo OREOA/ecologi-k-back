@@ -25,7 +25,8 @@ router.post('/load', async (request, response) => {
                 const purchase = new Purchase({
                     ean: row[0],
                     quantity: row[1],
-                    userId: row[2],
+                    userId: row[3],
+                    personAgeGroup: row[2]
                 })
                 const savedPurchase = await purchase.save()
                 data.push(Purchase.format(savedPurchase))
