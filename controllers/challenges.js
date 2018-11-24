@@ -13,7 +13,8 @@ challengeRouter.post('/', async (request, response) => {
     const challenge = new Challenge({
       name: body.name,
       description: body.description,
-      goal: body.goal
+      goal: body.goal,
+      field: body.field
     })
     const savedChallenge = await challenge.save()
 

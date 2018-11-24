@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const challengeSchema = new mongoose.Schema({
   name: String,
   description: String,
-  goal: Number
+  goal: Number,
+  field: String
 })
 
 challengeSchema.statics.format = (challenge) => {
@@ -11,7 +12,8 @@ challengeSchema.statics.format = (challenge) => {
     id: challenge.id,
     name: challenge.name,
     description: challenge.description,
-    goal: challenge.goal
+    goal: challenge.goal,
+    field: challenge.field
   }
 }
 
