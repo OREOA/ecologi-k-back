@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
     ean: String,
+    isConsumerGood: Boolean,
     attributes: {
         WHERL: {
             value: {
@@ -19,6 +20,7 @@ productSchema.statics.format = (product) => {
         ean: product.ean,
         name: product.marketingName.finnish,
         isDomestic: product.attributes.WHERL.value.value === 'FI',
+        isConsumerGood: product.isConsumerGood,
     }
 }
 
