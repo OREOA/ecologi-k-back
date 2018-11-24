@@ -11,6 +11,7 @@ customerRouter.post('/', async (request, response) => {
   try {
     const body = request.body
     const customer = new Customer({
+      userId: body.userId,
       PersonAgeGrp: body.personAgeGrp,
       KCustomer: body.kCustomer
     })
