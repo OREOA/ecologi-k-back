@@ -1,7 +1,7 @@
 const purchasesRouter = require('express').Router()
 const Purchase = require('../models/purchase')
 const fs = require('fs');
-const parse = require('csv-parse');
+const parse = require('csv-parse')
 
 purchasesRouter.get('/', async (request, response) => {
   const purchases = await Purchase

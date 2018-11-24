@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  name: String
+  sex: String,
+  ageGroup: String
 })
 
 userSchema.statics.format = (user) => {
   return {
     id: user.id,
-    username: user.username,
-    name: user.name
+    sex: user.sex,
+    ageGroup: user.ageGroup
   }
 }
 

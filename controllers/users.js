@@ -11,14 +11,10 @@ usersRouter.post('/', async (request, response) => {
   try {
     const body = request.body
     console.log(body)
-    const existingUser = await User.find({ username: body.username })
-    if (existingUser.length > 0) {
-      return response.status(400).json({ error: 'Username already taken' })
-    }
 
     const user = new User({
-      username: body.username,
-      name: body.name
+      sex: body.sex,
+      ageGroup: body.ageGroup
     })
     console.log(user)
     const savedUser = await user.save()
