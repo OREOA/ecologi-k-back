@@ -10,7 +10,7 @@ tqdm.pandas()
 def eanToFile():
     eanList = pd.Series([])
 
-    for chunk in pd.read_csv("junction/Junction_Data.csv", chunksize=100000, delimiter=';'):
+    for chunk in pd.read_csv("../Junction_Data.csv", chunksize=100000, delimiter=';'):
         eanList = eanList.append(chunk.EAN).drop_duplicates()
         print("new chunk!")
         print("eanList shape:", eanList.shape)
@@ -23,18 +23,26 @@ def eanToFile():
 
 
 def test():
-    data = next(pd.read_csv("junction/Junction_Data.csv", chunksize=100000, delimiter=';'))
+    data = next(pd.read_csv("../Junction_Data.csv", chunksize=100000, delimiter=';'))
     print(data.shape)
 
+def printDates():
+    for chunk in pd.read_csv("../Junction_Data.csv", chunksize=1000000, delimiter=';'):
+        print(chunk.TransactionDate.iloc[:5])
 
 
 #data.at[i, 'Quantity'] = data.at[i, 'Quantity'].replace(',','.')
 #data['Quantity'] = data['Quantity'].astype('float')
 
+def aggregateKCustomer(KCustomer):
+    df = pd.DataFrame()    
 
+    for chunk in tqdm(pd.read_csv("../Junction_Data.csv", chunksize=1000000, delimiter=';')):
+        df.append(chunk.query('KCustomer == ' + KCustomer))
+        print("New chunk!")
+    df.to_csv(KCustomer + '_data.csv', index=False)
 
-test()
-
+aggregateKCustomer('6712')
 
 #chunk = next(pd.read_csv("junction/Junction_Data.csv", chunksize=100000, delimiter=';'))
 #eanList = eanList.append(chunk.EAN).drop_duplicates()
