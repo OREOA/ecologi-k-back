@@ -1,5 +1,7 @@
 const challengeRouter = require('express').Router()
 const Challenge = require('../models/challenge')
+const Customer = require('../models/customer')
+const Result = require('../models/result')
 
 challengeRouter.get('/', async (request, response) => {
   const challenges = await Challenge
@@ -17,8 +19,20 @@ challengeRouter.post('/', async (request, response) => {
       field: body.field
     })
     const savedChallenge = await challenge.save()
+    const formattedChallenge = Challenge.format(savedChallenge)
+    const customers = await Customer.find({})
+    for (var i = 0; i < customers.length; i++) {
+      const customer = Customer.format(customers[i])
+      console.log(customer)
+      const result = new Result({
+        value: 0,
+        customer: customer.id,
+        challenge: formattedChallenge.id
+      })
+      const savedResult = await result.save()
+    }
 
-    response.json(Challenge.format(savedChallenge))
+    response.json(formattedChallenge)
   } catch (exception) {
     console.log(exception)
     response.status(500).json({ error: 'something went wrong...' })
