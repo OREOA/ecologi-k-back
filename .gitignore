@@ -63,3 +63,6 @@ typings/
 # idea & vscode
 .idea
 .vscode
+
+# data files
+Junction_Data.csv
