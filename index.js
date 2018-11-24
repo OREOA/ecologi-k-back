@@ -10,17 +10,18 @@ const exampleRouter = require('./controllers/example')
 const usersRouter = require('./controllers/users')
 const purchaseRouter = require('./controllers/purchases')
 const uploaderRouter = require('./controllers/uploader')
+const productsRouter = require('./controllers/products')
 
 mongoose
-  .connect(config.mongoUrl, {
-    useNewUrlParser: true
-  })
-  .then(() => {
-    console.log('connected to database', config.mongoUrl)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+    .connect(config.mongoUrl, {
+        useNewUrlParser: true,
+    })
+    .then(() => {
+        console.log('connected to database', config.mongoUrl)
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 mongoose.Promise = global.Promise
 
@@ -31,17 +32,18 @@ app.use('/hello', exampleRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/purchases', purchaseRouter)
 app.use('/api/uploader', uploaderRouter)
+app.use('/api/products', productsRouter)
 
 const server = http.createServer(app)
 const PORT = process.env.PORT || 3001
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })
 
 server.on('close', () => {
-  mongoose.connection.close()
+    mongoose.connection.close()
 })
 
 module.exports = {
-  app, server
+    app, server,
 }
