@@ -7,6 +7,14 @@ customerRouter.get('/', async (request, response) => {
   response.json(customers.map(Customer.format))
 })
 
+customerRouter.get('/:userId', async (req, res) => {
+  const { userId } = req.params
+  const customer = await Customer.findOne({
+    userId,
+  })
+  res.json(Customer.format(customer))
+})
+
 customerRouter.post('/', async (request, response) => {
   try {
     const body = request.body
