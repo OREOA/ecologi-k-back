@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
 productSchema.statics.format = (product) => {
     const countryCode = product.attributes.WHERL.value.value
     const scandinavianCountries = []
-    const europeanCountries = ['AD','AL','AT','BA','BE','BG','BY','CH','CY','CZ','DE','DK','EE','ES','FI','FO','FR','GG','GI','GR','HR','HU','IE','IM','IS','IT','JE','LI','LT','LU','LV','MC','MD','MK','MT','NL','NO','PL','PT','RO','RU','SE','SI','SJ','SK','SM','TR','UA','UK','VA','YU']
+    const europeanCountries = ['AT','BE','BG','CY','CZ','DE','EE','ES','FO','FR','GG','GI','GR','HR','HU','IE','IM','IT','JE','LT','LU','LV','MT','NL','PL','PT','RO','SI','SK','UK','VA']
     return {
         ean: product.ean,
         name: product.marketingName.finnish,
