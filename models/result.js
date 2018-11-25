@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const resultSchema = new mongoose.Schema({
     value: Number,
     completed: Boolean,
-    customer: {type: mongoose.Schema.Types.ObjectId, ref: 'Customer'},
+    customer: {type: mongoose.Schema.Types.String, ref: 'Customer'},
     challenge: {type: mongoose.Schema.Types.ObjectId, ref: 'Challenge'}
 })
 
