@@ -4,6 +4,6 @@ let mongoUrl = process.env.MONGODB_URI
 
 module.exports = {
     cacheEnabled: true,
-    cacheTimeout: '5 minutes',
+    cacheTimeout: '60 minutes',
     mongoUrl,
 }
